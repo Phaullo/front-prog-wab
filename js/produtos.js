@@ -28,29 +28,52 @@ async function criarProduto() {
 }
 
 async function consultarProduto(event) {
-    const li = document.getElementById("listaProdutos");
-    li.innerHTML = '';
+    const productGrid = document.querySelector(".products-grid");
+    productGrid.innerHTML = '';
+
     const getProducts = await fetch("http://localhost:3000/api/produto");
     const allProducts = await getProducts.json();
+    console.log('produtos', allProducts);
 
     if (allProducts) {
         allProducts.forEach(prod => {
-            const liElement = document.createElement("li");
-            liElement.innerHTML = prod.nome + " - R$" + prod.preco;
+            const productElement = document.createElement("div");
+            productElement.classList.add("product");
 
-            const btnEditar = document.createElement("button");
-            btnEditar.textContent = "Editar";
-            btnEditar.onclick = () => editarProduto(btnEditar);
-            btnEditar.id = prod.id;
-            liElement.appendChild(btnEditar);
+            const productImage = document.createElement("img");
+            productImage.src = prod.imagemUrl; 
+            productImage.alt = prod.nome;
+            productImage.style.width = '100%';
+            productElement.appendChild(productImage);
 
-            const btnExcluir = document.createElement("button");
-            btnExcluir.textContent = "Excluir";
-            btnExcluir.onclick = () => apagarProduto(btnExcluir);
-            btnExcluir.id = prod.id;
-            liElement.appendChild(btnExcluir);
+            const productInfo = document.createElement("div");
+            productInfo.innerHTML = `${prod.nome} - R$${prod.preco.toFixed(2)}`;
+            productElement.appendChild(productInfo);
 
-            listaProdutos.appendChild(liElement);
+            const btnAdicionar = document.createElement("button");
+            btnAdicionar.textContent = "Adicionar ao carrinho";
+            btnAdicionar.onclick = () => addToCart(prod.nome);
+            productElement.appendChild(btnAdicionar);
+
+            const btnContainer = document.createElement("div");
+            btnContainer.style.display = 'flex';
+            btnContainer.style.justifyContent = 'space-between';
+            btnContainer.style.marginTop = '10px';
+
+            //const btnEditar = document.createElement("button");
+            //btnEditar.textContent = "Editar";
+            //btnEditar.onclick = () => editarProduto(btnEditar);
+            //btnEditar.id = prod.id;
+            //btnContainer.appendChild(btnEditar);
+
+            //const btnExcluir = document.createElement("button");
+            //btnExcluir.textContent = "Excluir";
+            //btnExcluir.onclick = () => apagarProduto(btnExcluir);
+            //btnExcluir.id = prod.id;
+            //btnContainer.appendChild(btnExcluir);
+
+            productElement.appendChild(btnContainer);
+            productGrid.appendChild(productElement);
         });
     }
 }
