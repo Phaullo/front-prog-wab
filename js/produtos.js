@@ -1,3 +1,56 @@
+
+async function consultarProduto(event) {
+    const productGrid = document.querySelector(".products-grid");
+    productGrid.innerHTML = '';
+
+    const getProducts = await fetch("http://localhost:3000/api/produto");
+    const allProducts = await getProducts.json();
+    console.log('produtos', allProducts);
+
+    if (allProducts) {
+        allProducts.forEach(prod => {
+            const productElement = document.createElement("div");
+            productElement.classList.add("product");
+
+            const productImage = document.createElement("img");
+            productImage.src = prod.imagemUrl;  /// "./img/feijao-carioca.webp"
+            productImage.alt = prod.nome;
+            productImage.style.width = '100%';
+            productElement.appendChild(productImage);
+
+            const productInfo = document.createElement("div");
+            productInfo.innerHTML = `${prod.nome} - R$${prod.preco.toFixed(2)}`;
+            productElement.appendChild(productInfo);
+
+            const btnAdicionar = document.createElement("button");
+            btnAdicionar.textContent = "Adicionar ao carrinho";
+            btnAdicionar.onclick = () => addToCart(prod);
+            productElement.appendChild(btnAdicionar);
+
+            const btnContainer = document.createElement("div");
+            btnContainer.style.display = 'flex';
+            btnContainer.style.justifyContent = 'space-between';
+            btnContainer.style.marginTop = '10px';
+
+            // const btnEditar = document.createElement("button");
+            // btnEditar.textContent = "Editar";
+            // btnEditar.onclick = () => editarProduto(btnEditar);
+            // btnEditar.id = prod.id;
+            // btnContainer.appendChild(btnEditar);
+
+            // const btnExcluir = document.createElement("button");
+            // btnExcluir.textContent = "Excluir";
+            // btnExcluir.onclick = () => apagarProduto(btnExcluir);
+            // btnExcluir.id = prod.id;
+            // btnContainer.appendChild(btnExcluir);
+
+            productElement.appendChild(btnContainer);
+            productGrid.appendChild(productElement);
+        });
+    }
+}
+
+///  exemplos 
 async function criarProduto() {
     const nome = prompt("Digite o nome do produto:");
     if (nome) {
@@ -26,58 +79,6 @@ async function criarProduto() {
         }
     }
 }
-
-async function consultarProduto(event) {
-    const productGrid = document.querySelector(".products-grid");
-    productGrid.innerHTML = '';
-
-    const getProducts = await fetch("http://localhost:3000/api/produto");
-    const allProducts = await getProducts.json();
-    console.log('produtos', allProducts);
-
-    if (allProducts) {
-        allProducts.forEach(prod => {
-            const productElement = document.createElement("div");
-            productElement.classList.add("product");
-
-            const productImage = document.createElement("img");
-            productImage.src = prod.imagemUrl; 
-            productImage.alt = prod.nome;
-            productImage.style.width = '100%';
-            productElement.appendChild(productImage);
-
-            const productInfo = document.createElement("div");
-            productInfo.innerHTML = `${prod.nome} - R$${prod.preco.toFixed(2)}`;
-            productElement.appendChild(productInfo);
-
-            const btnAdicionar = document.createElement("button");
-            btnAdicionar.textContent = "Adicionar ao carrinho";
-            btnAdicionar.onclick = () => addToCart(prod.nome);
-            productElement.appendChild(btnAdicionar);
-
-            const btnContainer = document.createElement("div");
-            btnContainer.style.display = 'flex';
-            btnContainer.style.justifyContent = 'space-between';
-            btnContainer.style.marginTop = '10px';
-
-            //const btnEditar = document.createElement("button");
-            //btnEditar.textContent = "Editar";
-            //btnEditar.onclick = () => editarProduto(btnEditar);
-            //btnEditar.id = prod.id;
-            //btnContainer.appendChild(btnEditar);
-
-            //const btnExcluir = document.createElement("button");
-            //btnExcluir.textContent = "Excluir";
-            //btnExcluir.onclick = () => apagarProduto(btnExcluir);
-            //btnExcluir.id = prod.id;
-            //btnContainer.appendChild(btnExcluir);
-
-            productElement.appendChild(btnContainer);
-            productGrid.appendChild(productElement);
-        });
-    }
-}
-
 
 async function editarProduto (click){
     console.log('click', click.id)

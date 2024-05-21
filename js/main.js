@@ -34,13 +34,46 @@ function updateCart() {
     totalElement.innerText = total.toFixed(2);
 }
 
-function addToCart(productName) {
-    const existingProduct = cart.find(item => item.nome === productName);
+function addToCart(product) {
+    const existingProduct = cart.find(item => item.nome === product.nome);
     if (existingProduct) {
         existingProduct.quantidade += 1;
     } else {
-        cart.push({ nome: productName, quantidade: 1, precoUnitario: 1 }); 
+        console.log()
+        cart.push({ nome: product.nome, quantidade: 1, precoUnitario: product.preco }); 
     }
     document.getElementById('cart-count').innerText = cart.reduce((acc, item) => acc + item.quantidade, 0);
     updateCart();
+}
+
+async function finalizarCompra() {
+    if (cart.length > 0) {
+        const nome = prompt("Digite seu nome:");
+        const telefone = prompt("Digite seu telefone:");
+
+
+        try {
+            const response = await fetch('http://localhost:3000/api/pedido', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({nome, telefone, carrinho: cart})
+            });
+
+            if (response.ok) {
+                alert("Compra finalizada com sucesso!");
+                cart = [];
+                document.getElementById('cart-count').innerText = '0';
+                updateCart();
+            } else {
+                alert("Ocorreu um erro ao finalizar a compra. Tente novamente mais tarde.");
+            }
+        } catch (error) {
+            console.error('Erro ao finalizar compra:', error);
+            alert("Ocorreu um erro ao processar sua compra. Tente novamente mais tarde.");
+        }
+    } else {
+        alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
+    }
 }

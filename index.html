@@ -13,7 +13,7 @@
      
       <nav>
         <div>
-            <img src="./img/logo.jpg" alt="Supermercado Logo" style="height: 40px;">
+          <img src="./img/logo.jpg" alt="Supermercado Logo" style="height: 40px;">
         </div>
         <div>
             <a onclick="showDiv('home')">Home</a>
@@ -56,12 +56,6 @@
         <div id="produtos" class="content">
             <h1>Produtos</h1>
             <div class="products-grid">
-                <div class="product" id="product1">Produto 1 <button onclick="addToCart('Produto 1')">Adicionar ao carrinho</button></div>
-                <div class="product" id="product2">Produto 2 <button onclick="addToCart('Produto 2')">Adicionar ao carrinho</button></div>
-                <div class="product" id="product3">Produto 3 <button onclick="addToCart('Produto 3')">Adicionar ao carrinho</button></div>
-                <div class="product" id="product4">Produto 4 <button onclick="addToCart('Produto 4')">Adicionar ao carrinho</button></div>
-                <div class="product" id="product5">Produto 5 <button onclick="addToCart('Produto 5')">Adicionar ao carrinho</button></div>
-                <div class="product" id="product6">Produto 6 <button onclick="addToCart('Produto 6')">Adicionar ao carrinho</button></div>
             </div>
         </div>
 
@@ -91,6 +85,8 @@
           <div>
               <span>Total: R$<span id="total-price">0.00</span></span>
           </div>
+        <button onclick="finalizarCompra()">Finalizar Compra</button>
+
       </div>
       
     </div>
