@@ -1,14 +1,29 @@
+async function buscarProduto(){
+    let  prodNome = document.getElementById('buscarProd').value
+    if (prodNome){
+        const prod = await consultarProduto(`http://localhost:3000/api/produto?nome=${prodNome}`)
+        if (prod) exibirProdutos([prod]) // prod vem como objeto, estou jogando dentro do array [ ... ]
+        document.getElementById('buscarProd').value = ''
+    }else{
+        exibirProdutos( await consultarProduto(urlApi) )
+    }
+}
+async function consultarProduto(url) {
+    try {
+        const getProducts = await fetch(url);
+        const allProducts = await getProducts.json();
+        return allProducts
+    }catch(err){
+        return {"error": err}
+    }
+}
 
-async function consultarProduto(event) {
+function exibirProdutos(produtos){
     const productGrid = document.querySelector(".products-grid");
     productGrid.innerHTML = '';
-
-    const getProducts = await fetch("http://localhost:3000/api/produto");
-    const allProducts = await getProducts.json();
-    console.log('produtos', allProducts);
-
-    if (allProducts) {
-        allProducts.forEach(prod => {
+    
+    if (produtos) {
+        produtos.forEach(prod => {
             const productElement = document.createElement("div");
             productElement.classList.add("product");
 
@@ -24,7 +39,7 @@ async function consultarProduto(event) {
 
             const btnAdicionar = document.createElement("button");
             btnAdicionar.textContent = "Adicionar ao carrinho";
-            btnAdicionar.onclick = () => addToCart(prod);
+            btnAdicionar.onclick = () => adicionarCarrinho(prod);
             productElement.appendChild(btnAdicionar);
 
             const btnContainer = document.createElement("div");

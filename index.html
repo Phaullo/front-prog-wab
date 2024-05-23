@@ -23,31 +23,6 @@
         </div>
       </nav>
 
-      <!-- Bootstrap 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">     
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#" onclick="showDiv('home')">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" onclick="showDiv('produtos')">Produtos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="showDiv('contato')">Contato</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" onclick="showDiv('carrinho')">Carrinho (<span id="cart-count">0</span>)</a>
-              </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Digite o nome do produto" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-          </form>
-        </div>
-      </nav>
-      
-    FIM BOOSTRAP -->
         <div id="home" class="content">
             <h1>Bem-vindo ao Supermercado</h1>
             <p>Encontre os melhores produtos com os melhores preços!</p>
@@ -55,6 +30,9 @@
 
         <div id="produtos" class="content">
             <h1>Produtos</h1>
+            <input class="form-control mr-sm-2" type="search" placeholder="Digite o nome do produto" aria-label="Search" id="buscarProd">
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="buscarProduto()">Buscar</button>
+  
             <div class="products-grid">
             </div>
         </div>
@@ -85,7 +63,8 @@
           <div>
               <span>Total: R$<span id="total-price">0.00</span></span>
           </div>
-        <button onclick="finalizarCompra()">Finalizar Compra</button>
+          <button onclick="finalizarCompra()">Finalizar Compra</button>
+          <button onclick="limparCarrinho()">Limpar</button>
 
       </div>
       
