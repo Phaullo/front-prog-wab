@@ -2,7 +2,7 @@ async function buscarProduto(){
     let  prodNome = document.getElementById('buscarProd').value
     if (prodNome){
         const prod = await consultarProduto(`http://localhost:3000/api/produto?nome=${prodNome}`)
-        if (prod) exibirProdutos([prod]) // prod vem como objeto, estou jogando dentro do array [ ... ]
+        if (prod) exibirProdutos(prod)
         document.getElementById('buscarProd').value = ''
     }else{
         exibirProdutos( await consultarProduto(urlApi) )
